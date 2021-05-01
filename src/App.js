@@ -8,13 +8,13 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route path='/level'>
+        <Route path='/' exact>
           <Level />
         </Route>
         {/* <Route path='/users'>
           <Users />
         </Route> */}
-        <Route path='/'>
+        <Route path='/home'>
           <Home />
         </Route>
       </Switch>

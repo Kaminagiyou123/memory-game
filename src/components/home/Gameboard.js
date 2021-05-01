@@ -30,9 +30,9 @@ const Gameboard = ({ className }) => {
   }
   const array = [6, 1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5];
   let newArr = shuffle(array);
-  console.log(newArr);
+
   return (
-    <section className={className}>
+    <SectionWrapper>
       <h2>Memory Game</h2>
       <div className='box-container'>
         {newArr?.map((item, index) => {
@@ -40,11 +40,10 @@ const Gameboard = ({ className }) => {
         })}
       </div>
       <Scoreboard />
-    </section>
+    </SectionWrapper>
   );
 };
-
-export default styled(Gameboard)`
+export const SectionWrapper = styled.section`
   width: 80 vw;
   height: auto;
   background: ${setColor.mainGreen};
@@ -68,3 +67,5 @@ export default styled(Gameboard)`
     grid-column-gap: ${setRem(2)};
   }
 `;
+
+export default Gameboard;

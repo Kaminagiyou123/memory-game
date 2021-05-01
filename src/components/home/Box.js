@@ -26,7 +26,7 @@ const Box = ({ item, index }) => {
   }
 };
 
-const BoxWrapper = styled.button`
+export const BoxWrapper = styled.button`
   width: 20vw;
   height: 20vh;
   ${setBorder({ width: "6px", color: setColor.primaryColor })};

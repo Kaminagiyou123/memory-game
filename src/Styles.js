@@ -22,7 +22,7 @@ export const setFlex = ({ x = "center", y = "center" } = {}) => {
 //hero image
 export const setBackground = ({
   img = "../../images/homeBcg.jpeg",
-  color = " rgba(0, 0, 0, 0)",
+  color = "rgba(0, 0, 0, 0)",
 } = {}) => {
   return `background:linear-gradient(${color}, ${color}),
     url(${img}) center/cover fixed no-repeat;`;
