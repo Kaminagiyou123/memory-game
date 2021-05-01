@@ -1,17 +1,23 @@
 import React from "react";
 import styled from "styled-components";
 import { setColor, setFont, setRem, setBorder } from "../../Styles";
+import { useProductsContext } from "../../Context";
 const Scoreboard = ({ className }) => {
+  const { moves, pairsFound, bestRecord, startNew } = useProductsContext();
   return (
     <div className={className}>
       <div className='info-box'>
-        <span>4</span> Moves
+        <span>{moves}</span> Moves
       </div>
       <div className='info-box'>
-        <span>5</span> Pairs Found
+        <span>{pairsFound}</span> Pairs Found
       </div>
-      <button className='info-btn'>Start a New Round</button>
-      <button className='info-btn'>Show Number</button>
+      <div className='info-box'>
+        <span>{bestRecord ? bestRecord : 0}</span> Moves Best Record
+      </div>
+      <button className='info-btn' onClick={startNew}>
+        Start a New Round
+      </button>
     </div>
   );
 };

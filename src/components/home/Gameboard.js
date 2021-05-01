@@ -28,7 +28,7 @@ const Gameboard = ({ className }) => {
     }
     return array;
   }
-  const array = [0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5];
+  const array = [6, 1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5];
   let newArr = shuffle(array);
   console.log(newArr);
   return (
@@ -36,7 +36,7 @@ const Gameboard = ({ className }) => {
       <h2>Memory Game</h2>
       <div className='box-container'>
         {newArr?.map((item, index) => {
-          return <Box item={item} key={index} />;
+          return <Box item={item} index={index} />;
         })}
       </div>
       <Scoreboard />
@@ -61,7 +61,7 @@ export default styled(Gameboard)`
   }
   .box-container {
     margin: ${setRem(30)};
-    background-color: ${setColor.lightGrey};
+    background-color: ${setColor.mainGreen};
 
     display: grid;
     grid-template-columns: repeat(4, 1fr);
