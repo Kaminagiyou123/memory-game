@@ -3,20 +3,24 @@ import styled from "styled-components";
 import { setColor } from "../../Styles";
 import { BoxWrapper } from "./Box";
 import { Link } from "react-router-dom";
+import { useProductsContext } from "../../Context";
 
 const LevelBox = ({ item, index }) => {
+  const { setLevel } = useProductsContext();
   return (
-    <Link to='/home' style={{ textDecoration: "none" }}>
-      <LevelBoxWrapper as='button'>
-        <div>
-          Level
-          <span className='span'>{index}</span>
-        </div>
-        <div>
-          <span className='span'>{item}</span> Cards
-        </div>
-      </LevelBoxWrapper>
-    </Link>
+    <div onClick={() => setLevel(item)}>
+      <Link to='/home' style={{ textDecoration: "none" }}>
+        <LevelBoxWrapper as='button'>
+          <div>
+            Level
+            <span className='span'>{index}</span>
+          </div>
+          <div>
+            <span className='span'>{item}</span> Cards
+          </div>
+        </LevelBoxWrapper>
+      </Link>
+    </div>
   );
 };
 

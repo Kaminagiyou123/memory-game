@@ -9,33 +9,20 @@ import {
   setLetterSpacing,
 } from "../../Styles";
 import Box from "./Box";
-const Gameboard = ({ className }) => {
-  function shuffle(array) {
-    var currentIndex = array.length,
-      temporaryValue,
-      randomIndex;
+import { useProductsContext } from "../../Context";
 
-    // While there remain elements to shuffle...
-    while (0 !== currentIndex) {
-      // Pick a remaining element...
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex -= 1;
-
-      // And swap it with the current element.
-      temporaryValue = array[currentIndex];
-      array[currentIndex] = array[randomIndex];
-      array[randomIndex] = temporaryValue;
-    }
-    return array;
-  }
-  const array = [6, 1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5];
-  let newArr = shuffle(array);
+const Gameboard = () => {
+  const { cardsNumbers } = useProductsContext();
 
   return (
     <SectionWrapper>
       <h2>Memory Game</h2>
-      <div className='box-container'>
-        {newArr?.map((item, index) => {
+      <div
+        className={
+          cardsNumbers.length > 20 ? "box-container2" : "box-container"
+        }
+      >
+        {cardsNumbers?.map((item, index) => {
           return <Box item={item} index={index} />;
         })}
       </div>
@@ -64,6 +51,14 @@ export const SectionWrapper = styled.section`
 
     display: grid;
     grid-template-columns: repeat(4, 1fr);
+    grid-column-gap: ${setRem(2)};
+  }
+  .box-container2 {
+    margin: ${setRem(30)};
+    background-color: ${setColor.mainGreen};
+
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
     grid-column-gap: ${setRem(2)};
   }
 `;

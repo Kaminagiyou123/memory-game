@@ -2,7 +2,8 @@ import React from "react";
 import { SectionWrapper } from "./Gameboard";
 import styled, { keyframes } from "styled-components";
 import LevelBox from "./LevelBox";
-import { setColor, setTransition } from "../../Styles";
+import { setColor } from "../../Styles";
+
 const Levelboard = () => {
   const levelArr = [12, 16, 20, 24, 30, 36];
   return (

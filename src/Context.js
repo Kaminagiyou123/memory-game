@@ -1,6 +1,8 @@
 import React, { useContext, useReducer, useEffect } from "react";
 import reducer from "./reducer";
 const initialState = {
+  numberOfBoxes: 12,
+  cardsNumbers: [],
   moves: 0,
   pairsFound: 0,
   cardOne: null,
@@ -27,6 +29,9 @@ export const ProductsProvider = ({ children }) => {
   const setRecord = () => {
     dispatch({ type: "SET_RECORD" });
   };
+  const setLevel = (item) => {
+    dispatch({ type: "SET_LEVEL", payload: item });
+  };
 
   useEffect(() => {
     if (state.cardOne === state.cardTwo && state.cardTwo) {
@@ -51,6 +56,9 @@ export const ProductsProvider = ({ children }) => {
       startNew();
     }
   }, [state.pairsFound]);
+  useEffect(() => {
+    startNew();
+  }, [state.numberOfBoxes]);
 
   return (
     <ProductsContext.Provider
@@ -60,6 +68,7 @@ export const ProductsProvider = ({ children }) => {
         sameNumber,
         diffNumber,
         startNew,
+        setLevel,
       }}
     >
       {children}

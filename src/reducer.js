@@ -1,14 +1,26 @@
+import shuffle from "./components/home/Shuffle";
+
 const reducer = (state, action) => {
   if (action.type === "START_NEW") {
+    const array = Array.from(
+      { length: state.numberOfBoxes / 2 },
+      (_, i) => i + 1
+    );
+    let newArr = shuffle([...array, ...array]);
+
     return {
       ...state,
+      cardsNumbers: [...newArr],
       moves: 0,
       pairsFound: 0,
       cardOne: null,
       cardTwo: null,
-      cardsStatus: new Array(12).fill(0),
-      cardsPaired: new Array(12).fill(0),
+      cardsStatus: new Array(state.numberOfBoxes).fill(0),
+      cardsPaired: new Array(state.numberOfBoxes).fill(0),
     };
+  }
+  if (action.type === "SET_LEVEL") {
+    return { ...state, numberOfBoxes: action.payload };
   }
   if (action.type === "SET_RECORD") {
     return { ...state, bestRecord: state.moves };
@@ -25,7 +37,7 @@ const reducer = (state, action) => {
   if (action.type === "DIFF_NUMBER") {
     return {
       ...state,
-      cardsStatus: new Array(12).fill(0),
+      cardsStatus: new Array(state.numberOfBoxes).fill(0),
       cardOne: null,
       cardTwo: null,
       moves: state.moves + 1,
@@ -35,7 +47,7 @@ const reducer = (state, action) => {
     let newArr = [...state.cardsStatus];
     return {
       ...state,
-      cardsStatus: new Array(12).fill(0),
+      cardsStatus: new Array(state.numberOfBoxes).fill(0),
       cardOne: null,
       cardTwo: null,
       pairsFound: state.pairsFound + 1,
