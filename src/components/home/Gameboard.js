@@ -34,6 +34,9 @@ export const SectionWrapper = styled.section`
   width: 80 vw;
   height: auto;
   background: ${setColor.mainGreen};
+  .login {
+    background: white;
+  }
 
   h2 {
     ${setLetterSpacing(3)};

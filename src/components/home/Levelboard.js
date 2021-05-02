@@ -3,7 +3,7 @@ import { SectionWrapper } from "./Gameboard";
 import styled, { keyframes } from "styled-components";
 import LevelBox from "./LevelBox";
 import { setColor } from "../../Styles";
-
+import LoginButton from "./Login";
 const Levelboard = () => {
   const levelArr = [12, 16, 20, 24, 30, 36];
   return (
@@ -11,6 +11,7 @@ const Levelboard = () => {
       <h2>
         <span>Welcome to </span>Memory Game
       </h2>
+      <LoginButton />
       <div className='box-container'>
         {levelArr?.map((item, index) => {
           return <LevelBox item={item} index={index} />;

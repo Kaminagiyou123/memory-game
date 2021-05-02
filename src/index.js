@@ -4,11 +4,18 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { ProductsProvider } from "./Context";
+import { Auth0Provider } from "@auth0/auth0-react";
 ReactDOM.render(
   <React.StrictMode>
-    <ProductsProvider>
-      <App />
-    </ProductsProvider>
+    <Auth0Provider
+      domain='dev-lu9u0upp.us.auth0.com'
+      clientId={process.env.REACT_APP_CLIENT_ID}
+      redirectUri={window.location.origin}
+    >
+      <ProductsProvider>
+        <App />
+      </ProductsProvider>
+    </Auth0Provider>
   </React.StrictMode>,
   document.getElementById("root")
 );
