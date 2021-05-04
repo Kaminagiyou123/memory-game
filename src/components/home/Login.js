@@ -1,17 +1,44 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { SmallBtn } from "../globals/Buttons";
 import styled from "styled-components";
-import {
-  setColor,
-  setRem,
-  setBorder,
-  setFont,
-  setLetterSpacing,
-} from "../../Styles";
+import { setColor, setRem, setBorder, setFont } from "../../Styles";
+
+import { createData } from "../../Airtable";
 const LoginButton = ({ className }) => {
-  const { loginWithRedirect, logout } = useAuth0();
-  const { user, isAuthenticated } = useAuth0();
+  const [data, setData] = useState(null);
+  const {
+    loginWithRedirect,
+    logout,
+    user,
+    isAuthenticated,
+    loading,
+  } = useAuth0();
+  useEffect(() => {
+    if (isAuthenticated && user && !loading) {
+      var Airtable = require("airtable");
+      var base = new Airtable({ apiKey: process.env.REACT_APP_API_KEY }).base(
+        process.env.REACT_APP_BASE_ID
+      );
+
+      base("memogame")
+        .select({
+          filterByFormula: `username = "${user.name}"`,
+        })
+        .firstPage(function (err, record) {
+          if (err) {
+            console.error(err);
+            return;
+          }
+          setData(record);
+        });
+    }
+    console.log(data);
+
+    if (data?.length === 0) {
+      createData({ username: user.email });
+    }
+  }, [isAuthenticated]);
 
   return isAuthenticated ? (
     <>
