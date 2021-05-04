@@ -33,12 +33,13 @@ const LoginButton = ({ className }) => {
           setData(record);
         });
     }
-    console.log(data);
+  }, [isAuthenticated]);
 
+  useEffect(() => {
     if (data?.length === 0) {
       createData({ username: user.email });
     }
-  }, [isAuthenticated]);
+  }, [data]);
 
   return isAuthenticated ? (
     <>
