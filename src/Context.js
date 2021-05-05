@@ -14,6 +14,10 @@ const initialState = {
 const ProductsContext = React.createContext();
 export const ProductsProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const setUser = ({ item }) => {
+    dispatch({ type: "SET_USER", payload: item });
+  };
+
   const clickCard = ({ index, item }) => {
     dispatch({ type: "CLICK_CARD", payload: { index, item } });
   };
@@ -69,6 +73,7 @@ export const ProductsProvider = ({ children }) => {
         diffNumber,
         startNew,
         setLevel,
+        setUser,
       }}
     >
       {children}

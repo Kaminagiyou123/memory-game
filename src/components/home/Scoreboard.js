@@ -1,9 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { setColor, setFont, setRem, setBorder } from "../../Styles";
 import { useProductsContext } from "../../Context";
+import { useAuth0 } from "@auth0/auth0-react";
+import { Link } from "react-router-dom";
+import { updateData } from "../../Airtable";
 const Scoreboard = ({ className }) => {
+  const { user, isAuthenticated } = useAuth0();
   const { moves, pairsFound, bestRecord, startNew } = useProductsContext();
+
+  useEffect(() => {
+    if (user && bestRecord) {
+      updateData(user, { level0score: bestRecord });
+    }
+  }, [user, bestRecord]);
+
   return (
     <div className={className}>
       <div className='info-box'>
@@ -18,6 +29,9 @@ const Scoreboard = ({ className }) => {
       <button className='info-btn' onClick={startNew}>
         Start a New Round
       </button>
+      <Link to='/' className='info-btn'>
+        back home
+      </Link>
     </div>
   );
 };
@@ -45,5 +59,6 @@ export default styled(Scoreboard)`
     ${setFont.slanted};
     font-weight: bolder;
     font-size: ${setRem(20)};
+    text-decoration: none;
   }
 `;

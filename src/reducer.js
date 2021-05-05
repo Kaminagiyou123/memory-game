@@ -1,6 +1,9 @@
 import shuffle from "./components/home/Shuffle";
 
 const reducer = (state, action) => {
+  if (action.type === "SET_USER") {
+    return { ...state, userid: action.payload };
+  }
   if (action.type === "START_NEW") {
     const array = Array.from(
       { length: state.numberOfBoxes / 2 },

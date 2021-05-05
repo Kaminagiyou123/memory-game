@@ -6,44 +6,58 @@ export const findData = async (item) => {
 
   base("memogame")
     .select({
-      filterByFormula: `username = "${item.name}"`,
+      filterByFormula: `username = "${item.email}"`,
     })
     .firstPage(function (err, record) {
       if (err) {
         console.error(err);
         return;
       }
-      console.log("Retrieved", record.id);
+      return record;
     });
 };
 
-export const updateData = async (id, item) => {
+export const updateData = async (item, newRecord) => {
   var Airtable = require("airtable");
   var base = new Airtable({ apiKey: process.env.REACT_APP_API_KEY }).base(
     process.env.REACT_APP_BASE_ID
   );
 
-  base("memogame").update(
-    [
-      {
-        id: id,
-        fields: {
-          ...item,
-        },
-      },
-    ],
-    function (err, records) {
+  base("memogame")
+    .select({
+      filterByFormula: `username = "${item.email}"`,
+    })
+    .firstPage(function (err, results) {
       if (err) {
         console.error(err);
-        return;
+        throw err;
       }
-      records.forEach(function (record) {
-        console.log(record.get("Goal_to_Close"));
-      });
-    }
-  );
-};
 
+      if (results.length > 0) {
+        var id = results[0].id;
+
+        base("memogame").update(
+          [
+            {
+              id: id,
+              fields: {
+                ...newRecord,
+              },
+            },
+          ],
+          function (err, records) {
+            if (err) {
+              console.error(err);
+              return;
+            }
+            records.forEach(function (record) {
+              console.log(record);
+            });
+          }
+        );
+      }
+    });
+};
 export const createData = (item) => {
   var Airtable = require("airtable");
   var base = new Airtable({ apiKey: process.env.REACT_APP_API_KEY }).base(
