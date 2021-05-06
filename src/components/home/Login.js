@@ -3,7 +3,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { SmallBtn } from "../globals/Buttons";
 import styled from "styled-components";
 import { setColor, setRem, setBorder, setFont } from "../../Styles";
-
+import { useProductsContext } from "../../Context";
 import { createData } from "../../Airtable";
 const LoginButton = ({ className }) => {
   const [data, setData] = useState(null);
@@ -14,6 +14,7 @@ const LoginButton = ({ className }) => {
     isAuthenticated,
     loading,
   } = useAuth0();
+  const { setUser, userInfo } = useProductsContext();
   useEffect(() => {
     if (isAuthenticated && user && !loading) {
       var Airtable = require("airtable");
@@ -38,6 +39,12 @@ const LoginButton = ({ className }) => {
   useEffect(() => {
     if (data?.length === 0) {
       createData({ username: user.email });
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (data && data.length > 0) {
+      setUser(data[0].fields);
     }
   }, [data]);
 

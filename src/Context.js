@@ -1,20 +1,21 @@
 import React, { useContext, useReducer, useEffect } from "react";
 import reducer from "./reducer";
 const initialState = {
+  userInfo: null,
   numberOfBoxes: 12,
   cardsNumbers: [],
   moves: 0,
   pairsFound: 0,
   cardOne: null,
   cardTwo: null,
-  bestRecord: null,
+  bestRecord: 0,
   cardsStatus: new Array(12).fill(0),
   cardsPaired: new Array(12).fill(0),
 };
 const ProductsContext = React.createContext();
 export const ProductsProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const setUser = ({ item }) => {
+  const setUser = (item) => {
     dispatch({ type: "SET_USER", payload: item });
   };
 
@@ -32,6 +33,9 @@ export const ProductsProvider = ({ children }) => {
   };
   const setRecord = () => {
     dispatch({ type: "SET_RECORD" });
+  };
+  const loadRecord = (item) => {
+    dispatch({ type: "LOAD_RECORD", payload: item });
   };
   const setLevel = (item) => {
     dispatch({ type: "SET_LEVEL", payload: item });
@@ -74,6 +78,7 @@ export const ProductsProvider = ({ children }) => {
         startNew,
         setLevel,
         setUser,
+        loadRecord,
       }}
     >
       {children}

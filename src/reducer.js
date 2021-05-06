@@ -2,7 +2,7 @@ import shuffle from "./components/home/Shuffle";
 
 const reducer = (state, action) => {
   if (action.type === "SET_USER") {
-    return { ...state, userid: action.payload };
+    return { ...state, userInfo: action.payload };
   }
   if (action.type === "START_NEW") {
     const array = Array.from(
@@ -27,6 +27,9 @@ const reducer = (state, action) => {
   }
   if (action.type === "SET_RECORD") {
     return { ...state, bestRecord: state.moves };
+  }
+  if (action.type === "LOAD_RECORD") {
+    return { ...state, bestRecord: action.payload };
   }
   if (action.type === "CLICK_CARD") {
     let newArr = [...state.cardsStatus];

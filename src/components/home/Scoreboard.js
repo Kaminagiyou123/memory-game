@@ -6,14 +6,51 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { Link } from "react-router-dom";
 import { updateData } from "../../Airtable";
 const Scoreboard = ({ className }) => {
-  const { user, isAuthenticated } = useAuth0();
-  const { moves, pairsFound, bestRecord, startNew } = useProductsContext();
+  const { user } = useAuth0();
+  const {
+    moves,
+    pairsFound,
+    bestRecord,
+    startNew,
+    numberOfBoxes,
+    userInfo,
+    loadRecord,
+  } = useProductsContext();
 
   useEffect(() => {
     if (user && bestRecord) {
-      updateData(user, { level0score: bestRecord });
+      updateData(user, numberOfBoxes, bestRecord);
     }
   }, [user, bestRecord]);
+
+  useEffect(() => {
+    let level;
+    switch (parseInt(numberOfBoxes)) {
+      case 12:
+        level = "level0score";
+        break;
+      case 16:
+        level = "level1score";
+        break;
+      case 20:
+        level = "level2score";
+        break;
+      case 24:
+        level = "level3score";
+        break;
+      case 30:
+        level = "level4score";
+        break;
+      case 36:
+        level = "level5score";
+        break;
+      default:
+        break;
+    }
+
+    console.log(userInfo[level]);
+    userInfo && loadRecord(userInfo[level] || 0);
+  }, []);
 
   return (
     <div className={className}>

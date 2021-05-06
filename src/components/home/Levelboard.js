@@ -4,7 +4,10 @@ import styled, { keyframes } from "styled-components";
 import LevelBox from "./LevelBox";
 import { setColor } from "../../Styles";
 import LoginButton from "./Login";
+import { useAuth0 } from "@auth0/auth0-react";
+
 const Levelboard = () => {
+  const { user, isAuthenticated, loading } = useAuth0();
   const levelArr = [12, 16, 20, 24, 30, 36];
   return (
     <LevelSectionWrapper>
@@ -12,7 +15,7 @@ const Levelboard = () => {
         <span>Welcome to </span>Memory Game
       </h2>
       <LoginButton />
-      <div className='box-container'>
+      <div className={user ? "box-container" : "box-container-hidden"}>
         {levelArr?.map((item, index) => {
           return <LevelBox item={item} index={index} />;
         })}
@@ -44,6 +47,9 @@ const LevelSectionWrapper = styled(SectionWrapper)`
     margin: 2vh 0 2vh 0;
     display: flex;
     flex-direction: column;
+  }
+  .box-container-hidden {
+    display: none;
   }
 `;
 export default Levelboard;
